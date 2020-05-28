@@ -1,8 +1,8 @@
+import AppError from '@shared/errors/AppError';
 import FakeUsersRepository from '../repositories/Fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
-
 let createUser: CreateUserService;
 
 describe('CreateUser', () => {
@@ -14,11 +14,27 @@ describe('CreateUser', () => {
 
     it('should be able to create a new User', async () => {
         const user = await createUser.execute({
-            name: 'John Doe',
-            email: 'johndoe@email.com',
+            name: 'Pedro Gomes',
+            email: 'pedro@email.com',
             password: '1234567',
         });
 
         expect(user).toHaveProperty('id');
+    });
+
+    it('should be able to create a new user with same email', async () => {
+        await createUser.execute({
+            name: 'Pedro Gomes',
+            email: 'pedro@email.com',
+            password: '1234567',
+        });
+
+        await expect(
+            createUser.execute({
+                name: 'Pedro Gomes',
+                email: 'pedro@email.com',
+                password: '1234567',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });

@@ -1,4 +1,4 @@
-import AppError from '@shared/erros/AppError';
+import AppError from '@shared/errors/AppError';
 
 import IUpvotesRepository from '../repositories/IUpvotesRepository';
 

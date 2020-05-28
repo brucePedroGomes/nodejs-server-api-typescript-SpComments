@@ -1,6 +1,6 @@
 import Upvote from '@modules/comments/infra/typeorm/entities/Upvote';
 
-import AppError from '@shared/erros/AppError';
+import AppError from '@shared/errors/AppError';
 
 import IUpvotesRepository from '../repositories/IUpvotesRepository';
 
