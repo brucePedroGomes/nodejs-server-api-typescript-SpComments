@@ -1,10 +1,11 @@
-import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/erros/AppError';
+
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
     email: string;
@@ -17,12 +18,10 @@ interface IResponse {
 }
 
 class CreateSessionsService {
-    public async execute({ email, password }: IRequest): Promise<IResponse> {
-        const userRepository = getRepository(User);
+    constructor(private usersRepository: IUsersRepository) {}
 
-        const user = await userRepository.findOne({
-            where: { email },
-        });
+    public async execute({ email, password }: IRequest): Promise<IResponse> {
+        const user = await this.usersRepository.findByEmail(email);
 
         if (!user) {
             throw new AppError('Invalid email or password.', 401);
