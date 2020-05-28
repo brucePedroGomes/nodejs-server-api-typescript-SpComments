@@ -16,12 +16,16 @@ class UpvotesRepository implements IUpvotesRepository {
         return upvotes;
     }
 
-    public async findUserCommentId({
+    public async findUserIdCommentId({
         user_id,
         comment_id,
     }: IUpvotesDTO): Promise<Upvote | undefined> {
         const upvotes = await this.ormRepository.findOne({ where: { user_id, comment_id } });
         return upvotes;
+    }
+
+    public async delete(upvote: Upvote): Promise<void> {
+        await this.ormRepository.remove(upvote);
     }
 }
 

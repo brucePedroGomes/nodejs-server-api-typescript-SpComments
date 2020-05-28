@@ -1,7 +1,6 @@
-import { getRepository } from 'typeorm';
-
-import Upvotes from '@modules/comments/infra/typeorm/entities/Upvote';
 import AppError from '@shared/erros/AppError';
+
+import IUpvotesRepository from '../repositories/IUpvotesRepository';
 
 interface IRequest {
     user_id: string;
@@ -9,16 +8,19 @@ interface IRequest {
 }
 
 class CreateRemoveUpvoteservice {
+    constructor(private upvotesRepository: IUpvotesRepository) {}
+
     public async execute({ user_id, comment_id }: IRequest): Promise<void> {
-        const upvotesRepository = getRepository(Upvotes);
+        const upvote = await this.upvotesRepository.findUserIdCommentId({
+            user_id,
+            comment_id,
+        });
 
-        const voteFind = await upvotesRepository.findOne({ where: { comment_id, user_id } });
-
-        if (!voteFind) {
+        if (!upvote) {
             throw new AppError('You are not the owner of this vote');
         }
 
-        await upvotesRepository.delete({ user_id });
+        await this.upvotesRepository.delete(upvote);
     }
 }
 

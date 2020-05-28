@@ -3,27 +3,32 @@ import { Router } from 'express';
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import CreateUpvoteService from '../../services/CreateUpvoteService';
 import DeleteUpvoteService from '../../services/DeleteUpvoteService';
+import UpvotesRepository from '../typeorm/repositories/UpvotesRepository';
 
 const UpvotesRouter = Router();
 
 UpvotesRouter.post('/', ensureAuthenticated, async (req, res) => {
-    const UpvoteService = new CreateUpvoteService();
+    const upvotesRepository = new UpvotesRepository();
+
+    const upvoteService = new CreateUpvoteService(upvotesRepository);
+
     const { comment_id } = req.body;
 
-    const Upvotes = await UpvoteService.execute({
+    const upvotes = await upvoteService.execute({
         comment_id,
         user_id: req.user.id,
     });
 
-    return res.json(Upvotes);
+    return res.json(upvotes);
 });
 
 UpvotesRouter.delete('/delete', ensureAuthenticated, async (req, res) => {
-    const UpvoteService = new DeleteUpvoteService();
+    const upvotesRepository = new UpvotesRepository();
+    const upvoteService = new DeleteUpvoteService(upvotesRepository);
 
     const { comment_id } = req.body;
 
-    await UpvoteService.execute({ comment_id, user_id: req.user.id });
+    await upvoteService.execute({ comment_id, user_id: req.user.id });
 
     return res.status(200).json();
 });

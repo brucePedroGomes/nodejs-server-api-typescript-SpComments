@@ -4,5 +4,6 @@ import IUpvotesDTO from '../dtos/IUpvotesDTO';
 
 export default interface IUpvotesRepository {
     create(data: IUpvotesDTO): Promise<Upvote>;
-    findUserCommentId(data: IUpvotesDTO): Promise<Upvote | undefined>;
+    findUserIdCommentId(data: IUpvotesDTO): Promise<Upvote | undefined>;
+    delete(upvote: Upvote): Promise<void>;
 }

@@ -4,4 +4,5 @@ import ICreateCommentDTO from '../dtos/ICreateCommentDTO';
 export default interface ICommentsRepository {
     fetchCommentsSortedByUpvotes(): Promise<Comment[]>;
     create(data: ICreateCommentDTO): Promise<Comment>;
+    findByCommentId(comment_id: string): Promise<Comment | undefined>;
 }

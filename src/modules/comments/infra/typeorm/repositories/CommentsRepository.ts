@@ -35,6 +35,11 @@ class CommentsRepository implements ICommentsRepository {
 
         return comments;
     }
+
+    public async findByCommentId(comment_id: string): Promise<Comment | undefined> {
+        const comment = await this.ormRepository.findOne({ where: { comment_id } });
+        return comment;
+    }
 }
 
 export default CommentsRepository;
