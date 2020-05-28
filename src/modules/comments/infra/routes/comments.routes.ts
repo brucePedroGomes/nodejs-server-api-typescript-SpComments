@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import CreateCommentService from '../services/CreateCommentService';
-import CommentsRepository from '../repositories/CommentsRepository';
+import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
+import CommentsRepository from '@modules/comments/infra/typeorm/repositories/CommentsRepository';
+import CreateCommentService from '../../services/CreateCommentService';
 
 const commentsRouter = Router();
 

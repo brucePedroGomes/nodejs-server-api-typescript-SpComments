@@ -1,9 +1,8 @@
 import { Router } from 'express';
 
-import CreateUpvoteService from '../services/CreateUpvoteService';
-import DeleteUpvoteService from '../services/DeleteUpvoteService';
-
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
+import CreateUpvoteService from '../../services/CreateUpvoteService';
+import DeleteUpvoteService from '../../services/DeleteUpvoteService';
 
 const UpvotesRouter = Router();
 

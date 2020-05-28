@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 
-import Comment from '../models/Comment';
-import User from '../models/User';
-import AppError from '../erros/AppError';
+import Comment from '@modules/comments/infra/typeorm/entities/Comment';
+import User from '@modules/users/infra/typeorm/entities/User';
+import AppError from '@shared/erros/AppError';
 
 interface IRequest {
     title: string;

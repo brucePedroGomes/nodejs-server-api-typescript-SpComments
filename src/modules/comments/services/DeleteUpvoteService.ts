@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
-import Upvotes from '../models/Upvote';
-import AppError from '../erros/AppError';
+import Upvotes from '@modules/comments/infra/typeorm/entities/Upvote';
+import AppError from '@shared/erros/AppError';
 
 interface IRequest {
     user_id: string;

@@ -2,10 +2,10 @@ import 'reflect-metadata';
 
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+import AppError from '@shared/erros/AppError';
 import routes from './routes';
-import AppError from './erros/AppError';
 
-import './database';
+import '@shared/infra/typeorm';
 
 const app = express();
 
@@ -28,4 +28,4 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
     });
 });
 
-export default app;
+app.listen(3333, () => console.log('server started on port 3333'));
