@@ -8,7 +8,7 @@ interface IRequest {
     comment_id: string;
 }
 
-class CreateRemoveUpvoteservice {
+class CreateRemoveUpvoteService {
     constructor(private upvotesRepository: IUpvotesRepository) {}
 
     public async execute({ user_id, comment_id }: IRequest): Promise<void> {
@@ -31,4 +31,4 @@ class CreateRemoveUpvoteservice {
     }
 }
 
-export default CreateRemoveUpvoteservice;
+export default CreateRemoveUpvoteService;
