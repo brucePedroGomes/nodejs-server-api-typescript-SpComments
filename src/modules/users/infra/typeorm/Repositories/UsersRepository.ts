@@ -1,6 +1,7 @@
+import { Repository, getRepository } from 'typeorm';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
-import { Repository, getRepository } from 'typeorm';
 import ICreate from '@modules/users/dtos/ICreateUserDTO';
 
 export default class UsersRepository implements IUsersRepository {

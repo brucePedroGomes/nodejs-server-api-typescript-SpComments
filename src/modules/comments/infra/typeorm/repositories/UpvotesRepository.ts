@@ -1,6 +1,7 @@
+import { Repository, getRepository } from 'typeorm';
+
 import IUpvotesRepository from '@modules/comments/repositories/IUpvotesRepository';
 import IUpvotesDTO from '@modules/comments/dtos/IUpvotesDTO';
-import { Repository, getRepository } from 'typeorm';
 import Upvote from '../entities/Upvote';
 
 class UpvotesRepository implements IUpvotesRepository {

@@ -25,6 +25,7 @@ Esta aplicação foi desenvolvida com as tecnologias abaixo:
 -   [Node.js](https://nodejs.org/en/)
 -   [Express](https://expressjs.com/pt-br/)
 -   [Typeorm](https://typeorm.io/#/)
+-   [Jest](https://jestjs.io/)
 -   [JWT-token](https://jwt.io/)
 -   [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
 -   [uuid v4](https://github.com/thenativeweb/uuidv4/)
@@ -41,7 +42,7 @@ Esta aplicação foi desenvolvida com as tecnologias abaixo:
 ### Requirements
 
 -   [Node.js](https://nodejs.org/en/)
--   [Yarn](https://classic.yarnpkg.com/) or [npm](https://www.npmjs.com/)
+-   [Yarn](https://classic.yarnpkg.com/) or [Npm](https://www.npmjs.com/)
 -   [Docker](https://www.docker.com/products/docker-desktop)
 
 ```bash
@@ -57,8 +58,8 @@ $ yarn install
 # Create the instance of postgreSQL using docker
 $ sudo docker run --name spcomments_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 
-# Create a image SpComments in docker
 # Connect with docker database containers
+# Create a image SpComments in docker
 # Once the services are running, run the migrations
 
 $ yarn typeorm migration:run

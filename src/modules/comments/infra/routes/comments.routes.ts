@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import CommentsRepository from '@modules/comments/infra/typeorm/repositories/CommentsRepository';
-
 import CreateCommentService from '../../services/CreateCommentService';
 
 const commentsRouter = Router();

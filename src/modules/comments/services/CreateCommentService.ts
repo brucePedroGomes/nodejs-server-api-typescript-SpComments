@@ -1,4 +1,5 @@
 import Comment from '@modules/comments/infra/typeorm/entities/Comment';
+import AppError from '@shared/errors/AppError';
 import ICommentRepository from '../repositories/ICommentsRepository';
 
 interface IRequest {
@@ -11,6 +12,14 @@ class CreateCommentService {
     constructor(private commentsRepository: ICommentRepository) {}
 
     public async execute({ title, comment, user_id }: IRequest): Promise<Comment> {
+        if (!title) {
+            throw new AppError('title not found');
+        }
+
+        if (!comment) {
+            throw new AppError('comment not found');
+        }
+
         const comments = await this.commentsRepository.create({
             title,
             comment,
