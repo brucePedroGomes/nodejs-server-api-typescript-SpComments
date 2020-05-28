@@ -1,15 +1,24 @@
+import FakeUsersRepository from '../repositories/Fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
-import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 
-test('should be able to create a new User', () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const createUserService = new CreateUserService(fakeUserRepository);
+let fakeUsersRepository: FakeUsersRepository;
 
-    const user = createUserService.execute({
-        name: 'Pedro Gomes',
-        email: 'pedroleinar@hotmail.com',
-        password: '123456',
+let createUser: CreateUserService;
+
+describe('CreateUser', () => {
+    beforeEach(() => {
+        fakeUsersRepository = new FakeUsersRepository();
+
+        createUser = new CreateUserService(fakeUsersRepository);
     });
 
-    expect(user).toHaveProperty('id');
+    it('should be able to create a new User', async () => {
+        const user = await createUser.execute({
+            name: 'John Doe',
+            email: 'johndoe@email.com',
+            password: '1234567',
+        });
+
+        expect(user).toHaveProperty('id');
+    });
 });
