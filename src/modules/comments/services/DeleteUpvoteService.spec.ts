@@ -13,7 +13,7 @@ describe('DeleteUpvotes', () => {
         createUpvotes = new CreateUpvoteService(fakeUpvotesRepository);
     });
 
-    it('should be able to create a new upvotes', async () => {
+    it('should be able to delete a upvotes', async () => {
         await createUpvotes.execute({
             user_id: 'user_id',
             comment_id: '40934af5-1a64-44e2-90cf-8376a7b848b3',
