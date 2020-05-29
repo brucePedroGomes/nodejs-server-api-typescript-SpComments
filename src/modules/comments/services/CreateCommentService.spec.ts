@@ -18,5 +18,8 @@ describe('CreateComment', () => {
         });
 
         expect(comments).toHaveProperty('id');
+        expect(comments.comment).toBe(
+            'Um bom projeto de iluminação de praças deve contemplar esculturas',
+        );
     });
 });

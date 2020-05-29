@@ -20,6 +20,7 @@ describe('CreateUser', () => {
         });
 
         expect(user).toHaveProperty('id');
+        expect(user.name).toBe('Pedro Gomes');
     });
 
     it('should be able to create a new user with same email', async () => {

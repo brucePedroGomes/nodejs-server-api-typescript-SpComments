@@ -12,12 +12,8 @@ class CreateCommentService {
     constructor(private commentsRepository: ICommentRepository) {}
 
     public async execute({ title, comment, user_id }: IRequest): Promise<Comment> {
-        if (!title) {
-            throw new AppError('title not found');
-        }
-
-        if (!comment) {
-            throw new AppError('comment not found');
+        if (!title || !comment) {
+            throw new AppError('Title and comment are required');
         }
 
         const comments = await this.commentsRepository.create({
