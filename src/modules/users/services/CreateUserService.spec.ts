@@ -23,7 +23,7 @@ describe('CreateUser', () => {
         expect(user.name).toBe('Pedro Gomes');
     });
 
-    it('should be able to create a new user with same email', async () => {
+    it('should not be able to create a new user with same email', async () => {
         await createUser.execute({
             name: 'Pedro Gomes',
             email: 'pedro@email.com',

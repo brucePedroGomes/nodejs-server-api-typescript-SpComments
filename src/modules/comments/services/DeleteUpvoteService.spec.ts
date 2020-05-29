@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeUpvotesRepository from '../repositories/fakes/FakeUpvotesRepository';
 import DeleteUpvoteService from './DeleteUpvoteService';
 
@@ -27,5 +28,14 @@ describe('DeleteUpvotes', () => {
         });
 
         expect(upvotes).toBeFalsy();
+    });
+
+    it('should not be able to delete with an invalid id', async () => {
+        await expect(
+            deleteUpvotes.execute({
+                user_id: 'user_id',
+                comment_id: 'invalid-id',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });
