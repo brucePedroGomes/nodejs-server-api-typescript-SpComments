@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeUpvotesRepository from '../repositories/fakes/FakeUpvotesRepository';
 import DeleteUpvoteService from './DeleteUpvoteService';
 
@@ -27,5 +28,19 @@ describe('DeleteUpvotes', () => {
         });
 
         expect(upvotes).toBeFalsy();
+    });
+
+    it('the user can only delete his own vote', async () => {
+        await fakeUpvotesRepository.create({
+            user_id: 'user_id',
+            comment_id: '40934af5-1a64-44e2-90cf-8376a7b848b3',
+        });
+
+        await expect(
+            deleteUpvotes.execute({
+                user_id: 'invalid_user_id',
+                comment_id: '40934af5-1a64-44e2-90cf-8376a7b848b3',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });
