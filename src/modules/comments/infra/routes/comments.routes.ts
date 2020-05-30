@@ -1,24 +1,26 @@
 import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import CommentsRepository from '@modules/comments/infra/typeorm/repositories/CommentsRepository';
-import CreateCommentService from '../../services/CreateCommentService';
+
+import CommentsController from '../controllers/CommentsController';
+
+const commentsController = new CommentsController();
 
 const commentsRouter = Router();
 
-commentsRouter.post('/', ensureAuthenticated, async (req, res) => {
-    const { title, comment } = req.body;
-    const commentsRepository = new CommentsRepository();
-    const createCommentService = new CreateCommentService(commentsRepository);
-
-    const comments = await createCommentService.execute({
-        title,
-        comment,
-        user_id: req.user.id,
-    });
-
-    return res.json(comments);
-});
+commentsRouter.post(
+    '/',
+    ensureAuthenticated,
+    celebrate({
+        [Segments.BODY]: {
+            title: Joi.string().required(),
+            comment: Joi.string().required(),
+        },
+    }),
+    commentsController.create,
+);
 
 commentsRouter.get('/', async (_, res) => {
     const commentsRepository = new CommentsRepository();

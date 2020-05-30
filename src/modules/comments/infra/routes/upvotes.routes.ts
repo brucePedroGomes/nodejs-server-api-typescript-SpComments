@@ -1,36 +1,33 @@
 import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
-import CreateUpvoteService from '../../services/CreateUpvoteService';
-import DeleteUpvoteService from '../../services/DeleteUpvoteService';
-import UpvotesRepository from '../typeorm/repositories/UpvotesRepository';
+import UpvotesController from '../controllers/UpvotesController';
+
+const upvotesController = new UpvotesController();
 
 const UpvotesRouter = Router();
 
-UpvotesRouter.post('/', ensureAuthenticated, async (req, res) => {
-    const upvotesRepository = new UpvotesRepository();
+UpvotesRouter.use(ensureAuthenticated);
 
-    const upvoteService = new CreateUpvoteService(upvotesRepository);
+UpvotesRouter.post(
+    '/',
+    celebrate({
+        [Segments.BODY]: {
+            comment_id: Joi.string().uuid().required(),
+        },
+    }),
+    upvotesController.create,
+);
 
-    const { comment_id } = req.body;
-
-    const upvotes = await upvoteService.execute({
-        comment_id,
-        user_id: req.user.id,
-    });
-
-    return res.json(upvotes);
-});
-
-UpvotesRouter.delete('/delete', ensureAuthenticated, async (req, res) => {
-    const upvotesRepository = new UpvotesRepository();
-    const upvoteService = new DeleteUpvoteService(upvotesRepository);
-
-    const { comment_id } = req.body;
-
-    await upvoteService.execute({ comment_id, user_id: req.user.id });
-
-    return res.status(200).json();
-});
+UpvotesRouter.delete(
+    '/delete',
+    celebrate({
+        [Segments.BODY]: {
+            comment_id: Joi.string().uuid().required(),
+        },
+    }),
+    upvotesController.delete,
+);
 
 export default UpvotesRouter;

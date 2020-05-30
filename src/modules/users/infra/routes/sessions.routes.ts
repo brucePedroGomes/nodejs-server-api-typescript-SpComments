@@ -1,21 +1,21 @@
 import { Router } from 'express';
-import CreateSessionsService from '../../services/CreateSessionService';
-import UsersRepository from '../typeorm/Repositories/UsersRepository';
+import { celebrate, Segments, Joi } from 'celebrate';
+
+import CreateSessionController from '../controllers/CreateSessionController';
+
+const createSessionController = new CreateSessionController();
 
 const sessionsRouter = Router();
 
-sessionsRouter.post('/', async (req, res) => {
-    const { email, password } = req.body;
-
-    const usersRepository = new UsersRepository();
-
-    const createSessions = new CreateSessionsService(usersRepository);
-
-    const { user, token } = await createSessions.execute({ email, password });
-
-    delete user.password;
-
-    res.json({ user, token });
-});
+sessionsRouter.post(
+    '/',
+    celebrate({
+        [Segments.BODY]: {
+            email: Joi.string().email().required(),
+            password: Joi.string().required(),
+        },
+    }),
+    createSessionController.create,
+);
 
 export default sessionsRouter;

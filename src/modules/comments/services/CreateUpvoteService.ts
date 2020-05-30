@@ -1,5 +1,3 @@
-import { isUuid } from 'uuidv4';
-
 import Upvote from '@modules/comments/infra/typeorm/entities/Upvote';
 import AppError from '@shared/errors/AppError';
 import IUpvotesRepository from '../repositories/IUpvotesRepository';
@@ -13,12 +11,6 @@ class CreateUpvotesService {
     constructor(private upvotesRepository: IUpvotesRepository) {}
 
     public async execute({ user_id, comment_id }: IRequest): Promise<Upvote> {
-        const validCommentId = isUuid(comment_id);
-
-        if (!validCommentId) {
-            throw new AppError('comment id invalid');
-        }
-
         const findId = await this.upvotesRepository.findUserIdCommentId({ user_id, comment_id });
 
         if (findId) {
