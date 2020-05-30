@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import FakeUpvotesRepository from '../repositories/fakes/FakeUpvotesRepository';
 import CreateUpvoteService from './CreateUpvoteService';
 
@@ -18,14 +17,5 @@ describe('CreateUpvote', () => {
         });
 
         expect(upvotes).toHaveProperty('id');
-    });
-
-    it('should not be able to create with an invalid id', async () => {
-        await expect(
-            createUpvotes.execute({
-                user_id: 'user_id',
-                comment_id: 'invalid-id',
-            }),
-        ).rejects.toBeInstanceOf(AppError);
     });
 });
