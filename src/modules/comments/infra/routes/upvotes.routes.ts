@@ -11,9 +11,9 @@ const UpvotesRouter = Router();
 UpvotesRouter.use(ensureAuthenticated);
 
 UpvotesRouter.post(
-    '/',
+    '/:comment_id',
     celebrate({
-        [Segments.BODY]: {
+        [Segments.PARAMS]: {
             comment_id: Joi.string().uuid().required(),
         },
     }),
@@ -21,9 +21,9 @@ UpvotesRouter.post(
 );
 
 UpvotesRouter.delete(
-    '/delete',
+    '/delete/:comment_id',
     celebrate({
-        [Segments.BODY]: {
+        [Segments.PARAMS]: {
             comment_id: Joi.string().uuid().required(),
         },
     }),

@@ -9,7 +9,7 @@ class UpvotesController {
         const upvotesRepository = new UpvotesRepository();
         const upvoteService = new CreateUpvoteService(upvotesRepository);
 
-        const { comment_id } = req.body;
+        const { comment_id } = req.params;
 
         const upvotes = await upvoteService.execute({
             comment_id,
@@ -23,7 +23,7 @@ class UpvotesController {
         const upvotesRepository = new UpvotesRepository();
         const upvoteService = new DeleteUpvoteService(upvotesRepository);
 
-        const { comment_id } = req.body;
+        const { comment_id } = req.params;
 
         await upvoteService.execute({ comment_id, user_id: req.user.id });
 
